@@ -50,8 +50,10 @@ public class Fungus implements Cloneable{
     public void grow(double[] climate){
         if(this.spreaded == false){
             //TODO: Complete the spreading process model
+            this.spreadProgress += this.basicV;
         }
         //TODO: Decomposition increment
+        this.decomp += this.basicB;
     }
 
     //Generation Methods:
