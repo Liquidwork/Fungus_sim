@@ -16,6 +16,9 @@ public class Map {
         //TODO: generate several different spiecies randomly at the map
     }
 
+    /**
+     * Spread and decomposition in this method
+     */
     public void spread(){
         double[] climate = this.climate.getClimate();
         for (int i=0; i < map.length; i++){
@@ -28,13 +31,6 @@ public class Map {
                 }
             }
         }
-    }
-
-    /**
-     * All the fungi decomposite 1-day-quantity
-     */
-    public void decomposition(){
-        //TODO: let all fungi composite
     }
 
     /**

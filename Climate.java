@@ -8,4 +8,5 @@ public abstract class Climate {
      * @return an array of {tempature, humunity change}
      */
     public abstract double[] getClimate();
+
 }
