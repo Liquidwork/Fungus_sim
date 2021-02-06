@@ -1,5 +1,5 @@
 public class SimuMain{
-
+/*first try*/
     public int duration;
     public int size;
 
