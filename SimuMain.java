@@ -12,8 +12,8 @@ public class SimuMain{
 
     /**
      * New Simulation object
-     * @param size
-     * @param duration
+     * @param size size of the map tobe initialized
+     * @param duration the duration of whole test (unit: day)
      */
     public SimuMain(int size, int duration){
         this.duration = duration;
@@ -29,19 +29,29 @@ public class SimuMain{
         }
     }
 
+    /**
+     * Put data into file, including:
+     * <ul>
+     * <li> boime map,</li>
+     * <li> total decomposition map.</li>
+     * </ul>
+     * All file will be place in <i>".\\data\\dd_hh_mm_ss\\"</i> folder.
+     * <br>
+     * @param day input the day that data representing
+     */
     public void saveProgress(int day){
-        SimpleDateFormat ft = new SimpleDateFormat ("dd_hh_mm_ss");
-        File parentDir = new File(".\\data");
+        SimpleDateFormat ft = new SimpleDateFormat ("dd_hh_mm_ss"); //Date formatting
+        File parentDir = new File(".\\data"); //Create data folder if not exists
         if(!parentDir.exists()){
             parentDir.mkdirs();
         }
         String path = ".\\data\\" + ft.format(this.current);
         File directory = new File(path);
-        directory.mkdir();
+        directory.mkdir(); //Create test_data folder if not exists
         File biomeFile = new File(path + "\\day" + day + "biome.csv");
         File decomFile = new File(path + "\\day" + day + "decom.csv");
         try {
-            biomeFile.createNewFile();
+            biomeFile.createNewFile();//Create the file
             decomFile.createNewFile();
             PrintWriter biomeOut = new PrintWriter(biomeFile);
             PrintWriter decomOut = new PrintWriter(decomFile);
@@ -63,7 +73,7 @@ public class SimuMain{
             biomeOut.close();
             decomOut.close();
         } catch (Exception e) {
-            System.err.println("Day" + day);
+            System.err.println("Error at Day " + day);
             e.printStackTrace();
         }
         
