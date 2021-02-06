@@ -34,7 +34,7 @@ public class Fungus implements Cloneable{
     private Fungus(Fungus f){
         this.basicB = f.basicB;
         this.basicV = f.basicV;
-        this.decomp = f.decomp;
+        this.mTradeOff = f.mTradeOff;
         this.fungusId = f.fungusId;
     }
 

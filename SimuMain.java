@@ -8,6 +8,7 @@ public class SimuMain{
     public int duration;
     public int size;
     public Map mapSim;
+    private Date current;
 
     /**
      * New Simulation object
@@ -22,44 +23,54 @@ public class SimuMain{
 
     public void start(){
         for (int i=0; i < duration; i++){
+            current = new Date();
             this.mapSim.spread();
-            if(i%2==1) this.saveProgress(i);
+            if(i%5 == 4) this.saveProgress(i);
         }
     }
 
     public void saveProgress(int day){
-        Date current = new Date();
         SimpleDateFormat ft = new SimpleDateFormat ("dd_hh_mm_ss");
         File parentDir = new File(".\\data");
         if(!parentDir.exists()){
             parentDir.mkdirs();
         }
-        String path = ".\\data\\" + ft.format(current);
+        String path = ".\\data\\" + ft.format(this.current);
         File directory = new File(path);
         directory.mkdir();
-        File file = new File(path + "\\day" + day + ".csv");
+        File biomeFile = new File(path + "\\day" + day + "biome.csv");
+        File decomFile = new File(path + "\\day" + day + "decom.csv");
         try {
-            file.createNewFile();
-            PrintWriter out = new PrintWriter(file);
+            biomeFile.createNewFile();
+            decomFile.createNewFile();
+            PrintWriter biomeOut = new PrintWriter(biomeFile);
+            PrintWriter decomOut = new PrintWriter(decomFile);
             for (int i=0; i < this.mapSim.map.length; i++){
+                String biomeLine = "";
+                String decomLine = "";
                 for (int j=0; j < this.mapSim.map[0].length; j++){
                     if(this.mapSim.map[i][j] == null){
-                        out.print(" ,");
+                        biomeLine = biomeLine.concat(" ,");
+                        decomLine = decomLine.concat("0,");
                     }else{
-                        out.print(this.mapSim.map[i][j].fungusId + ",");
+                        biomeLine = biomeLine.concat(this.mapSim.map[i][j].fungusId + ",");
+                        decomLine = decomLine.concat(this.mapSim.map[i][j].decomp + ",");
                     }
                 }
-                out.println();
+                biomeOut.println(biomeLine.substring(0, biomeLine.length()-1)); //Delete last comma
+                decomOut.println(decomLine.substring(0, decomLine.length()-1)); //Delete last comma
             }
-            out.close();
+            biomeOut.close();
+            decomOut.close();
         } catch (Exception e) {
+            System.err.println("Day" + day);
             e.printStackTrace();
         }
         
     }
 
     public static void main(String[] args) {
-        SimuMain simu = new SimuMain(60, 10);
+        SimuMain simu = new SimuMain(200, 20);
         simu.start();
         double totalDecom = 0;
         for (int i=0; i < simu.mapSim.map.length; i++){
