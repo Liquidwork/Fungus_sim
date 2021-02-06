@@ -20,10 +20,10 @@ public class Fungus implements Cloneable{
 
     public Fungus(){
         this.fungusId = fungiCount++;// Generate an id for this new species, add the count
-        this.basicV = this.generateBasicV();        //Generate a horizontal spreading speed
-        this.basicX = this.generateBasicX();        //Generate a Hyphal extenrion rate
-        this.mTradeOff = this.generateMTradeOff();  //Generate a Moisture trade-off factor
-        this.basicB = this.generatebasicB();        //Calculate a Basic value of decomponent mass per unit area
+        this.basicV = generateBasicV();        //Generate a horizontal spreading speed
+        this.basicX = generateBasicX();        //Generate a Hyphal extenrion rate
+        this.mTradeOff = generateMTradeOff();  //Generate a Moisture trade-off factor
+        this.basicB = generatebasicB(this.basicX);        //Calculate a Basic value of decomponent mass per unit area
     }
 
     private Fungus(Fungus f){
@@ -42,7 +42,7 @@ public class Fungus implements Cloneable{
     }
 
     /*Generate a horizontal spreading speed with Normal distribution mean = 1 Variance = 0.15*/
-    private double generateBasicV()
+    private static double generateBasicV()
     {
         double mean = 1.0;
         double variance = 0.15;
@@ -51,22 +51,22 @@ public class Fungus implements Cloneable{
         return basicV;
     }
     /*Generate a Hyphal extenrion rate with Uniform distribution from 1 to 10*/
-    private double generateBasicX()
+    private static double generateBasicX()
     {
         double basicX = 9.0*Math.random() + 1.0;
         return basicX;
     }
     /*Generate a Moisture trade-off factor with Uniform distribution from -1 to 1*/
-    private double generateMTradeOff()
+    private static double generateMTradeOff()
     {
         double mTradeOff = 2.0*Math.random() - 1;
         return mTradeOff;
     }
-    /*Calculate a Basic value of decomponent mass per unit area*/
-    private double generatebasicB()
+    /*Calculate a Basic value of decomponent mass per unit area by basicX*/
+    private static double generatebasicB(double basicX)
     {
        double basicB;
-       double x = this.basicX;
+       double x = basicX;
        basicB = 3 * Math.log(x+1)/Math.PI;
        return basicB;
     }
