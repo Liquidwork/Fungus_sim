@@ -79,7 +79,7 @@ public class Map {
         if(j != map[0].length-1 && this.map[i][j+1] == null){
             this.fungiClone(i, j, i, j+1, savedProcess);
         }
-        if(i != map.length-1 && j != map[0].length && this.map[i+1][j+1] == null){
+        if(i != map.length-1 && j != map[0].length-1 && this.map[i+1][j+1] == null){
             this.fungiClone(i, j, i+1, j+1, savedProcess);
         }
     }
