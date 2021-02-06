@@ -1,6 +1,7 @@
+import java.util.Random;
+
 /**
- * Fungus class
- * Cloneable as it need to spread by cloning(mitosis)
+ * Fungus class Cloneable as it need to spread by cloning(mitosis)
  */
 public class Fungus implements Cloneable{
     public static int fungiCount = 0;
@@ -42,6 +43,7 @@ public class Fungus implements Cloneable{
        double basicB;
        double x = this.basicX;
        basicB = 3 * Math.log(x+1)/Math.PI;
+       return basicB;
     }
 
     public Fungus(){
