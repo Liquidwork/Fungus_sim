@@ -13,11 +13,12 @@ public class Fungus implements Cloneable{
     public double mTradeOff;// Moisture trade-off of this species
     public double spreadProgress = 0;
     public double decomp = 0;// total decomposition of fungus on this area
+    public boolean spreaded = false;
+    
+
     /**
      * Generate a random species
      */
-
-
     public Fungus(){
         this.fungusId = fungiCount++;// Generate an id for this new species, add the count
         this.basicV = generateBasicV();        //Generate a horizontal spreading speed
@@ -26,6 +27,10 @@ public class Fungus implements Cloneable{
         this.basicB = generatebasicB(this.basicX);        //Calculate a Basic value of decomponent mass per unit area
     }
 
+    /**
+     * Clone a fungus from another one
+     * @param f fungi to be clone
+     */
     private Fungus(Fungus f){
         this.basicB = f.basicB;
         this.basicV = f.basicV;
@@ -33,14 +38,23 @@ public class Fungus implements Cloneable{
         this.fungusId = f.fungusId;
     }
 
+    @Override
     public Fungus clone(){
         return new Fungus(this);
     }
 
+    /**
+     * Let the fungi grow, adding the spread progress while decompositing
+     * @param climate the array representing environment including temperature and humudity changes
+     */
     public void grow(double[] climate){
-
+        if(this.spreaded == false){
+            //TODO: Complete the spreading process model
+        }
+        //TODO: Decomposition increment
     }
 
+    //Generation Methods:
     /*Generate a horizontal spreading speed with Normal distribution mean = 1 Variance = 0.15*/
     private static double generateBasicV()
     {

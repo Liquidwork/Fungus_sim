@@ -17,7 +17,7 @@ public class Map {
     }
 
     /**
-     * Spread and decomposition in this method
+     * Spread and decomposition all the fungus biomes in this map
      */
     public void spread(){
         double[] climate = this.climate.getClimate();
@@ -37,8 +37,10 @@ public class Map {
      * Spread a cell if possible
      */
     private void spreadCell(int i, int j){
+        int savedProcess = (int)map[i][j].spreadProgress - 1;
         if(i != 0){
             this.map[i-1][j] = this.map[i-1][j] == null ? (Fungus)this.map[i][j].clone() :  this.map[i-1][j];
+            
         }
         if(j != 0){
             this.map[i][j-1] = this.map[i][j-1] == null ? (Fungus)this.map[i][j].clone() :  this.map[i][j-1];
