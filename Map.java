@@ -1,5 +1,6 @@
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Random;
 
 /**
  * This is a map that conducts the simulation of fungi spreading model.
@@ -17,7 +18,6 @@ public class Map {
     public Map(int size, Climate climate){
         map = new Fungus[size][size];
         this.climate = climate;
-        //TODO: generate several different spiecies randomly at the map
         Random random = new Random();
         int i = 0;
         int numOfFungi = random.nextInt(5) + 1; //Randomly determine how many fungi species(between 1-5)  in this experiment 
@@ -25,18 +25,12 @@ public class Map {
         for(i=0; i<numOfFungi; i++) //Generate different fungi species
         {   
             do{
-            xAxis = random.nextInt(size); //generate the initial location on x-Axis of a species of fungi(between 0 to size-1)
-            yAxis = random.nextInt(size); //generate the initial location on y-Axis of a species of fungi(between 0 to size-1)
-            }while(map[xAxis][yAxis] != null) //check if the location alreay be taken
+                xAxis = random.nextInt(size); //generate the initial location on x-Axis of a species of fungi(between 0 to size-1)
+                yAxis = random.nextInt(size); //generate the initial location on y-Axis of a species of fungi(between 0 to size-1)
+            }while(map[xAxis][yAxis] != null); //check if the location alreay be taken
             
             map[xAxis][yAxis] = new Fungus();//Put in a type of fungi
-
-
         }
-
-
-
-
     }
 
     /**
