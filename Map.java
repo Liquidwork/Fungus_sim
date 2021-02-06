@@ -16,14 +16,48 @@ public class Map {
         //TODO: generate several different spiecies randomly at the map
     }
 
+    /**
+     * Spread and decomposition all the fungus biomes in this map
+     */
     public void spread(){
-        //TODO: spread each fungus biomes
+        double[] climate = this.climate.getClimate();
+        for (int i=0; i < map.length; i++){
+            for (int j=0; j < map[0].length; j++){
+                if(map[i][j] == null) continue;
+                map[i][j].grow(climate);
+                if(map[i][j].spreadProgress >= 1){
+                    this.spreadCell(i, j);
+                    map[i][j].spreadProgress -= 1.;
+                }
+            }
+        }
     }
 
     /**
-     * All the fungi decomposite 1-day-quantity
+     * Spread a cell if possible
      */
-    public void decomposition(){
-        //TODO: let all fungi composite
+    private void spreadCell(int i, int j){
+        int savedProcess = (int)map[i][j].spreadProgress - 1;
+        if(i != 0){
+            this.map[i-1][j] = this.map[i-1][j] == null ? (Fungus)this.map[i][j].clone() :  this.map[i-1][j];
+            
+        }
+        if(j != 0){
+            this.map[i][j-1] = this.map[i][j-1] == null ? (Fungus)this.map[i][j].clone() :  this.map[i][j-1];
+        }
+        if(i != 0 && j != 0){
+            this.map[i-1][j-1] = this.map[i-1][j-1] == null ? (Fungus)this.map[i][j].clone() :  this.map[i-1][j-1];
+        }
+        if(i != map.length-1){
+            this.map[i+1][j] = this.map[i+1][j] == null ? (Fungus)this.map[i][j].clone() :  this.map[i+1][j];
+        }
+        if(j != map[0].length-1){
+            this.map[i][j+1] = this.map[i][j+1] == null ? (Fungus)this.map[i][j].clone() :  this.map[i][j+1];
+        }
+        if(i != map.length-1 && j != map[0].length-1){
+            this.map[i+1][j+1] = this.map[i+1][j+1] == null ? (Fungus)this.map[i][j].clone() :  this.map[i+1][j+1];
+        }
     }
 }
+
+    
