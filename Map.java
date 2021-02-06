@@ -9,9 +9,9 @@ import java.util.Random;
 public class Map {
     public Fungus[][] map;
     public Climate climate;
-    private Queue<int[]> spreadable = new LinkedList<>(); //A queue to implement the spreading model
+    private Queue<int[]> spreadable = new LinkedList<>(); //A queue to implement the spreading
     /**
-     * Initialize a map with a preset size
+     * Initialize a map with a preset size.
      * @param size the size of the map
      * @param climate the climate of the test
      */
@@ -21,8 +21,8 @@ public class Map {
         Random random = new Random();
         int i = 0;
         int numOfFungi = random.nextInt(5) + 1; //Randomly determine how many fungi species(between 1-5)  in this experiment 
-        int xAxis,yAxis;
-        for(i=0; i<numOfFungi; i++) //Generate different fungi species
+        int xAxis, yAxis;
+        for(i=0; i < numOfFungi; i++) //Generate different fungi species
         {   
             do{
                 xAxis = random.nextInt(size); //generate the initial location on x-Axis of a species of fungi(between 0 to size-1)
@@ -34,17 +34,17 @@ public class Map {
     }
 
     /**
-     * Spread and decomposition all the fungus biomes in this map
+     * Spread and decomposition all the fungus biomes in this map.
      */
     public void spread(){
         double[] climate = this.climate.getClimate();
         for (int i=0; i < map.length; i++){
             for (int j=0; j < map[0].length; j++){
                 if(map[i][j] == null) continue;
-                map[i][j].grow(climate);
-                if(map[i][j].spreadProgress >= 1){
+                map[i][j].grow(climate); // gain spread progress and decompositing
+                if(map[i][j].spreadProgress >= 1){ // if spreadable
                     int[] pos = {i, j};
-                    spreadable.offer(pos); // Record the spreadable cells
+                    spreadable.offer(pos); // Record the spreadable cells position
                 }
             }
         }
@@ -55,14 +55,15 @@ public class Map {
     }
 
     /**
-     * Spread a cell if possible
-     * It may offer several new elements into the spreadable queue if the new cell is still spreadable
+     * Spread a cell if possible.
+     * It may offer several new elements into the spreadable queue if the new cell is still spreadable (process > 1).
      * @param i cell coordinate i
      * @param j cell coordinate j
      */
     private void spreadCell(int i, int j){
         double savedProcess = (int)map[i][j].spreadProgress - 1;
-        map[i][j].spreadProgress = 0; map[i][j].spreaded = true;
+        map[i][j].spreadProgress = 0; map[i][j].spreaded = true; // Useful for optimization as no species can be removed or die out
+        //Test 6 spreading direction
         if(i != 0 && this.map[i-1][j] == null){
             this.fungiClone(i, j, i-1, j, savedProcess);
         }
@@ -83,7 +84,9 @@ public class Map {
         }
     }
     /**
-     * A method called in spreadCell
+     * A method called in spreadCell.
+     * Clone a fungi into another place, saved process can be introduced.
+     * It may offer several new elements into the spreadable queue if the new cell is still spreadable (process > 1).
      * @param i coordinate i being cloned
      * @param j coordinate j being cloned
      * @param newI coordinate i to be cloned into
