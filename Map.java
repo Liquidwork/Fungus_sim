@@ -17,6 +17,7 @@ public class Map {
         Random random = new Random();
         int i = 0;
         int numOfFungi = random.nextInt(5) + 1; //Randomly determine how many fungi species(between 1-5)  in this experiment 
+        int xAxis,yAxis;
         for(i=0; i<numOfFungi; i++) //Generate different fungi species
         {   
             do{
