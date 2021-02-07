@@ -29,9 +29,13 @@ public class FileClimate extends Climate {
             humReader.readLine();
         }
         while((temLine = temReader.readLine()) != null && (humLine = humReader.readLine()) != null){
-            pair[0] = Double.parseDouble(temLine.split("Quantity[")[1].split(",")[0]); //Get the number
-            pair[1] = Double.parseDouble(humLine.split(", 8.]\",")[1]); //Get the number
-            this.pairs.offer(pair);
+            try{
+                pair[0] = Double.parseDouble(temLine.split("Quantity\\[")[1].split(",")[0]); //Get the number
+                pair[1] = Double.parseDouble(humLine.split("8.\\]\",")[1]); //Get the number
+                this.pairs.offer(pair.clone());//clone it to record a new array
+            }catch(Exception e){
+                //do nothing
+            }
         }
         temReader.close();
         humReader.close();
@@ -43,7 +47,7 @@ public class FileClimate extends Climate {
 
     @Override
     public double[] getClimate() {
-        if(this.pairs.size()==1) this.pairs.offer(this.pairs.peek()); // Out put the last one if there is no more data available
+        //if(this.pairs.size()==1) this.pairs.offer(this.pairs.peek()); // Out put the last one if there is no more data available
         return this.pairs.poll();
     }
 }
