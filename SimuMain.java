@@ -4,8 +4,10 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Main class of simulations
+ */
 public class SimuMain {
-    /* first try */
     public int duration;
     public int size;
     public Map mapSim;
@@ -30,7 +32,9 @@ public class SimuMain {
             if (i % 10 == 9)
                 this.saveProgress(i);
         }
-        saveStatistic();
+        this.saveStatistic();
+        this.saveTimeSerie();
+        
     }
 
     /**
@@ -122,6 +126,31 @@ public class SimuMain {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Save a time serie with fungi data of each species, each day
+     */
+    public void saveTimeSerie(){
+        SimpleDateFormat ft = new SimpleDateFormat("dd_hh_mm_ss"); // Date formatting
+        String path = ".\\data\\" + ft.format(this.current);
+        File file = new File(path + "\\time_series.csv");
+        try {
+            file.createNewFile();
+            PrintWriter out = new PrintWriter(file);
+            while(!this.mapSim.boimeData[0].isEmpty()){ //read all time data
+                String line = "";
+                for(int i=0; i < this.mapSim.boimeData.length; i++){ //poll a round and a round seperately
+                    double count = this.mapSim.boimeData[i].poll()[0];
+                    line = line.concat(count + ",");
+                }
+                out.println(line.substring(0, line.length() - 1)); //delete last comma and print
+            }
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
     }
 
     public static void main(String[] args) throws IOException {

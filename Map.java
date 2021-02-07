@@ -10,11 +10,14 @@ public class Map {
     public Fungus[][] map;
     public Climate climate;
     private Queue<int[]> spreadable = new LinkedList<>(); //A queue to implement the spreading
+    public LinkedList<double[]>[] boimeData; //Place to record all the time-serie data
+
     /**
      * Initialize a map with a preset size.
      * @param size the size of the map
      * @param climate the climate of the test
      */
+    @SuppressWarnings("unchecked")
     public Map(int size, Climate climate){
         map = new Fungus[size][size];
         this.climate = climate;
@@ -22,6 +25,7 @@ public class Map {
         int i = 0;
         int numOfFungi = random.nextInt(1) + 20; //Randomly determine how many fungi species(between 1-5)  in this experiment 
         int xAxis, yAxis;
+        this.boimeData = new LinkedList[numOfFungi];
         for(i=0; i < numOfFungi; i++) //Generate different fungi species
         {   
             do{
@@ -30,6 +34,7 @@ public class Map {
             }while(map[xAxis][yAxis] != null); //check if the location alreay be taken
             
             map[xAxis][yAxis] = new Fungus();//Put in a type of fungi
+            boimeData[i] = new LinkedList<double[]>();
         }
     }
 
@@ -38,6 +43,10 @@ public class Map {
      */
     public void spread(){
         double[] climate = this.climate.getClimate();
+        for (int i=0; i < Fungus.fungiCount; i++){
+            double[] pair = {0., 0.}; //Start a new time point
+            boimeData[i].offer(pair);
+        }
         for (int i=0; i < map.length; i++){
             for (int j=0; j < map[0].length; j++){
                 if(map[i][j] == null) continue;
@@ -46,6 +55,9 @@ public class Map {
                     int[] pos = {i, j};
                     spreadable.offer(pos); // Record the spreadable cells position
                 }
+                double[] pair = boimeData[map[i][j].fungusId].peekLast(); //Get the newly insert data
+                pair[0] += 1;   
+                pair[1] += map[i][j].decomp;
             }
         }
         while(!spreadable.isEmpty()){ //Spread all the cells which is spreadable, the queue may extend itself while spreading
