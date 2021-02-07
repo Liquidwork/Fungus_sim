@@ -18,15 +18,16 @@ public class SimuMain{
     public SimuMain(int size, int duration){
         this.duration = duration;
         this.size = size;
-        mapSim = new Map(size, new ConstantClimate(22, 0));
+        mapSim = new Map(size, new ConstantClimate(12, 0));
     }
 
     public void start(){
+        this.current = new Date();
         for (int i=0; i < duration; i++){
-            current = new Date();
-            this.mapSim.spread();
-            if(i%5 == 4) this.saveProgress(i);
+            this.mapSim.spread(); // a step of simulation
+            if(i%10 == 9) this.saveProgress(i);
         }
+        saveStatistic();
     }
 
     /**
@@ -79,8 +80,48 @@ public class SimuMain{
         
     }
 
+    /**
+     * Save statistic file with all species global data, including
+     * <ul>
+     * <li>fungus id</li>
+     * <li>basic v</li>
+     * <li>basic x</li>
+     * <li>basic B</li>
+     * <li>Moisture trade-off</li>
+     * <li>total cells</li>
+     * <li>total decomposition</li>
+     * </ul>
+     */
+    public void saveStatistic(){
+        int count = Fungus.fungiCount;
+        FungusStatistic fs[] = new FungusStatistic[count];
+        for(int i = 0; i < count; i++){
+            fs[i] = new FungusStatistic();
+        }
+        for (int i=0; i < this.mapSim.map.length; i++){
+            for (int j=0; j < this.mapSim.map[0].length; j++){
+                if(this.mapSim.map[i][j] == null) continue;
+                    fs[this.mapSim.map[i][j].fungusId].record(this.mapSim.map[i][j]);
+            }
+        }
+        SimpleDateFormat ft = new SimpleDateFormat ("dd_hh_mm_ss"); //Date formatting
+        String path = ".\\data\\" + ft.format(this.current);
+        File file = new File(path + "\\statistic.csv");
+        try {
+            file.createNewFile();
+            PrintWriter out = new PrintWriter(file);
+            out.println("id,v,x,B,mtradeoff,cells,decom");
+            for(int i = 0; i < count; i++){
+                out.println(fs[i]); // A proper toString method is overriden
+            }
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
-        SimuMain simu = new SimuMain(200, 20);
+        SimuMain simu = new SimuMain(400, 100);
         simu.start();
         double totalDecom = 0;
         for (int i=0; i < simu.mapSim.map.length; i++){
