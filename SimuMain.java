@@ -22,18 +22,18 @@ public class SimuMain {
     public SimuMain(int size, int duration, Climate climate) {
         this.duration = duration;
         this.size = size;
-        mapSim = new Map(size, climate, 200);
+        mapSim = new Map(size, climate);
     }
 
     public void start() {
         this.current = new Date();
         for (int i = 0; i < duration; i++) {
             this.mapSim.spread(); // a step of simulation
-            if (i % 10 == 9)
-                this.saveProgress(i);
+            if (i % 10 == 9);
+                // this.saveProgress(i);
         }
-        this.saveStatistic();
-        this.saveTimeSerie();
+        // this.saveStatistic();
+        // this.saveTimeSerie();
         
     }
 
@@ -154,16 +154,13 @@ public class SimuMain {
     }
 
     public static void main(String[] args) throws IOException {
-        
-        SimuMain simu = new SimuMain(400, 100, new FileClimate("RomeTem.csv", "RomeHum.csv", 91));
-        simu.start();
-        double totalDecom = 0;
-        for (int i=0; i < simu.mapSim.map.length; i++){
-            for (int j=0; j < simu.mapSim.map[0].length; j++){
-                if(simu.mapSim.map[i][j] == null) continue;
-                totalDecom += simu.mapSim.map[i][j].decomp;
+        for(int i = 5; i <= 30; i += 5 ){
+            Map.FungusNumber = i;
+            for(int j = 0; j < 5; j++){
+                SimuMain simu = new SimuMain(400, 30, new ConstantClimate(22, 0.5));
             }
         }
-        System.out.println(totalDecom);
+        
+        
     }
 }

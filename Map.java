@@ -12,6 +12,7 @@ public class Map {
     private Queue<int[]> spreadable = new LinkedList<>(); //A queue to implement the spreading
     public LinkedList<double[]>[] boimeData; //Place to record all the time-serie data
     public static Random random = new Random();
+    public static int FungusNumber = 20;
 
     /**
      * Initialize a map with a preset size.
@@ -23,7 +24,7 @@ public class Map {
         map = new Fungus[size][size];
         this.climate = climate;
         int i = 0;
-        int numOfFungi = random.nextInt(1) + 20; //Randomly determine how many fungi species(between 1-5)  in this experiment 
+        int numOfFungi = random.nextInt(1) + FungusNumber; //Randomly determine how many fungi species(between 1-5)  in this experiment 
         int xAxis, yAxis;
         this.boimeData = new LinkedList[numOfFungi];
         for(i=0; i < numOfFungi; i++) //Generate different fungi species
@@ -50,7 +51,7 @@ public class Map {
         map = new Fungus[size][size];
         this.climate = climate;
         int i = 0;
-        int numOfFungi = random.nextInt(1) + 20; //Randomly determine how many fungi species(between 1-5)  in this experiment 
+        int numOfFungi = random.nextInt(1) + FungusNumber; //Randomly determine how many fungi species(between 1-5)  in this experiment 
         int xAxis, yAxis;
         this.boimeData = new LinkedList[numOfFungi];
         for(i=0; i < numOfFungi; i++) //Generate different fungi species
