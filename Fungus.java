@@ -69,20 +69,19 @@ public class Fungus implements Cloneable{
     {
         double mean = 3.0;
         double deviation = 0.15;
-        Random random = new Random();
-        double basicV = deviation * random.nextGaussian() + mean;
+        double basicV = deviation * Map.random.nextGaussian() + mean;
         return basicV;
     }
     /*Generate a Hyphal extenrion rate with Uniform distribution from 1 to 10*/
     private static double generateBasicX()
     {
-        double basicX = 9.0*Math.random() + 1.0;
+        double basicX = 9.0*Map.random.nextDouble() + 1.0;
         return basicX;
     }
     /*Generate a Moisture trade-off factor with Uniform distribution from -1 to 1*/
     private static double generateMTradeOff()
     {
-        double mTradeOff = 2.0*Math.random() - 1;
+        double mTradeOff = 2.0*Map.random.nextDouble() - 1;
         return mTradeOff;
     }
     /*Calculate a Basic value of decomponent mass per unit area by basicX*/
