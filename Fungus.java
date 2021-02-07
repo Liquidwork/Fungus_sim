@@ -10,6 +10,8 @@ public class Fungus implements Cloneable{
     private static final double[] A ={0.3769, 0.5144, 0.2450};  //Several Constants for temperature penalty
     private static final double[] B ={0.3311, 0.05467, -0.4457};
     private static final double[] C ={0.2746, 0.5334, 0.9016};
+    public static boolean useSameFungus = false; //whether use the same fungus group
+    public static int generatorNumber = 5;// the number of generator,same generator generate same random number
 
     public int fungusId; 
     //Basic value is the attributes of the fungi at 22deg, no humidity change.
@@ -63,26 +65,70 @@ public class Fungus implements Cloneable{
         this.decomp += this.basicB;
     }
 
+     /**
+     * When invoke,make the random generator generate the same fungus group
+     */
+    public static boolean useSameFungus()
+    {
+        useSameFungus = true;
+        return useSameFungus;
+    }
+      /**
+     * When invoke,stop generate the same fungus group
+     */
+    public static boolean notUseSameFungus()
+    {
+        useSameFungus = false;
+        return useSameFungus;
+    }
+
+
     //Generation Methods:
     /*Generate a horizontal spreading speed with Normal distribution mean = 1 Variance = 0.15*/
     private static double generateBasicV()
     {
         double mean = 3.0;
         double deviation = 0.15;
-        Random random = new Random();
+        Random random;
+        if(useSameFungus)
+        {
+             random = new Random(generatorNumber);
+        }
+        else
+        {
+             random = new Random();
+        }
         double basicV = deviation * random.nextGaussian() + mean;
         return basicV;
     }
     /*Generate a Hyphal extenrion rate with Uniform distribution from 1 to 10*/
     private static double generateBasicX()
     {
-        double basicX = 9.0*Math.random() + 1.0;
+        Random random;
+        if(useSameFungus)
+        {
+             random = new Random(generatorNumber);
+        }
+        else
+        {
+             random = new Random();
+        }
+        double basicX = 9.0*random.nextFloat() + 1.0;
         return basicX;
     }
     /*Generate a Moisture trade-off factor with Uniform distribution from -1 to 1*/
     private static double generateMTradeOff()
     {
-        double mTradeOff = 2.0*Math.random() - 1;
+        Random random;
+        if(useSameFungus)
+        {
+             random = new Random(generatorNumber);
+        }
+        else
+        {
+             random = new Random();
+        }
+        double mTradeOff = 2.0*random.nextFloat() - 1;
         return mTradeOff;
     }
     /*Calculate a Basic value of decomponent mass per unit area by basicX*/
@@ -93,6 +139,7 @@ public class Fungus implements Cloneable{
        basicB = 3 * Math.log(x+1)/Math.PI;
        return basicB;
     }
+
 
     /**
      * Get temperature penalty. It is noted that the method is memoriable but idempotent.
