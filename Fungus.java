@@ -68,9 +68,9 @@ public class Fungus implements Cloneable{
     private static double generateBasicV()
     {
         double mean = 1.0;
-        double variance = 0.15;
+        double deviation = 0.15;
         Random random = new Random();
-        double basicV = Math.sqrt(variance)*random.nextGaussian() + mean;
+        double basicV = deviation * random.nextGaussian() + mean;
         return basicV;
     }
     /*Generate a Hyphal extenrion rate with Uniform distribution from 1 to 10*/
