@@ -1,10 +1,11 @@
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class SimuMain{
-/*first try*/
+public class SimuMain {
+    /* first try */
     public int duration;
     public int size;
     public Map mapSim;
@@ -12,20 +13,22 @@ public class SimuMain{
 
     /**
      * New Simulation object
-     * @param size size of the map tobe initialized
+     * 
+     * @param size     size of the map tobe initialized
      * @param duration the duration of whole test (unit: day)
      */
-    public SimuMain(int size, int duration){
+    public SimuMain(int size, int duration, Climate climate) {
         this.duration = duration;
         this.size = size;
-        mapSim = new Map(size, new ConstantClimate(12, 0));
+        mapSim = new Map(size, climate);
     }
 
-    public void start(){
+    public void start() {
         this.current = new Date();
-        for (int i=0; i < duration; i++){
+        for (int i = 0; i < duration; i++) {
             this.mapSim.spread(); // a step of simulation
-            if(i%10 == 9) this.saveProgress(i);
+            if (i % 10 == 9)
+                this.saveProgress(i);
         }
         saveStatistic();
     }
@@ -33,43 +36,43 @@ public class SimuMain{
     /**
      * Put data into file, including:
      * <ul>
-     * <li> boime map,</li>
-     * <li> total decomposition map.</li>
+     * <li>boime map,</li>
+     * <li>total decomposition map.</li>
      * </ul>
-     * All file will be place in <i>".\\data\\dd_hh_mm_ss\\"</i> folder.
-     * <br>
+     * All file will be place in <i>".\\data\\dd_hh_mm_ss\\"</i> folder. <br>
+     * 
      * @param day input the day that data representing
      */
-    public void saveProgress(int day){
-        SimpleDateFormat ft = new SimpleDateFormat ("dd_hh_mm_ss"); //Date formatting
-        File parentDir = new File(".\\data"); //Create data folder if not exists
-        if(!parentDir.exists()){
+    public void saveProgress(int day) {
+        SimpleDateFormat ft = new SimpleDateFormat("dd_hh_mm_ss"); // Date formatting
+        File parentDir = new File(".\\data"); // Create data folder if not exists
+        if (!parentDir.exists()) {
             parentDir.mkdirs();
         }
         String path = ".\\data\\" + ft.format(this.current);
         File directory = new File(path);
-        directory.mkdir(); //Create test_data folder if not exists
+        directory.mkdir(); // Create test_data folder if not exists
         File biomeFile = new File(path + "\\day" + day + "biome.csv");
         File decomFile = new File(path + "\\day" + day + "decom.csv");
         try {
-            biomeFile.createNewFile();//Create the file
+            biomeFile.createNewFile();// Create the file
             decomFile.createNewFile();
             PrintWriter biomeOut = new PrintWriter(biomeFile);
             PrintWriter decomOut = new PrintWriter(decomFile);
-            for (int i=0; i < this.mapSim.map.length; i++){
+            for (int i = 0; i < this.mapSim.map.length; i++) {
                 String biomeLine = "";
                 String decomLine = "";
-                for (int j=0; j < this.mapSim.map[0].length; j++){
-                    if(this.mapSim.map[i][j] == null){
+                for (int j = 0; j < this.mapSim.map[0].length; j++) {
+                    if (this.mapSim.map[i][j] == null) {
                         biomeLine = biomeLine.concat(" ,");
                         decomLine = decomLine.concat("0,");
-                    }else{
+                    } else {
                         biomeLine = biomeLine.concat(this.mapSim.map[i][j].fungusId + ",");
                         decomLine = decomLine.concat(this.mapSim.map[i][j].decomp + ",");
                     }
                 }
-                biomeOut.println(biomeLine.substring(0, biomeLine.length()-1)); //Delete last comma
-                decomOut.println(decomLine.substring(0, decomLine.length()-1)); //Delete last comma
+                biomeOut.println(biomeLine.substring(0, biomeLine.length() - 1)); // Delete last comma
+                decomOut.println(decomLine.substring(0, decomLine.length() - 1)); // Delete last comma
             }
             biomeOut.close();
             decomOut.close();
@@ -77,7 +80,7 @@ public class SimuMain{
             System.err.println("Error at Day " + day);
             e.printStackTrace();
         }
-        
+
     }
 
     /**
@@ -92,26 +95,27 @@ public class SimuMain{
      * <li>total decomposition</li>
      * </ul>
      */
-    public void saveStatistic(){
+    public void saveStatistic() {
         int count = Fungus.fungiCount;
         FungusStatistic fs[] = new FungusStatistic[count];
-        for(int i = 0; i < count; i++){
+        for (int i = 0; i < count; i++) {
             fs[i] = new FungusStatistic();
         }
-        for (int i=0; i < this.mapSim.map.length; i++){
-            for (int j=0; j < this.mapSim.map[0].length; j++){
-                if(this.mapSim.map[i][j] == null) continue;
-                    fs[this.mapSim.map[i][j].fungusId].record(this.mapSim.map[i][j]);
+        for (int i = 0; i < this.mapSim.map.length; i++) {
+            for (int j = 0; j < this.mapSim.map[0].length; j++) {
+                if (this.mapSim.map[i][j] == null)
+                    continue;
+                fs[this.mapSim.map[i][j].fungusId].record(this.mapSim.map[i][j]);
             }
         }
-        SimpleDateFormat ft = new SimpleDateFormat ("dd_hh_mm_ss"); //Date formatting
+        SimpleDateFormat ft = new SimpleDateFormat("dd_hh_mm_ss"); // Date formatting
         String path = ".\\data\\" + ft.format(this.current);
         File file = new File(path + "\\statistic.csv");
         try {
             file.createNewFile();
             PrintWriter out = new PrintWriter(file);
             out.println("id,v,x,B,mtradeoff,cells,decom");
-            for(int i = 0; i < count; i++){
+            for (int i = 0; i < count; i++) {
                 out.println(fs[i]); // A proper toString method is overriden
             }
             out.close();
@@ -120,8 +124,9 @@ public class SimuMain{
         }
     }
 
-    public static void main(String[] args) {
-        SimuMain simu = new SimuMain(400, 100);
+    public static void main(String[] args) throws IOException {
+        
+        SimuMain simu = new SimuMain(400, 100, new FileClimate("RomeTem.csv", "RomeHum.csv", 91));
         simu.start();
         double totalDecom = 0;
         for (int i=0; i < simu.mapSim.map.length; i++){
