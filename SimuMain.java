@@ -29,7 +29,7 @@ public class SimuMain {
         this.current = new Date();
         for (int i = 0; i < duration; i++) {
             this.mapSim.spread(); // a step of simulation
-            if (i % 10 == 9);
+            // if (i % 10 == 9);
                 // this.saveProgress(i);
         }
         // this.saveStatistic();
@@ -158,7 +158,14 @@ public class SimuMain {
             Map.FungusNumber = ii;
             double totalDecom = 0;
             for(int jj = 0; jj < 5; jj++){
-                SimuMain simu = new SimuMain(400, 50, new FileClimate("BjTem.csv", "BjHum.csv", 237));
+                SimuMain simu = new SimuMain(400, 100, new FileClimate("BjTem.csv", "BjHum.csv", 90));
+                simu.start();
+                for (int i=0; i < simu.mapSim.map.length; i++){
+                    for (int j=0; j < simu.mapSim.map[0].length; j++){
+                        if(simu.mapSim.map[i][j] == null) continue;
+                        simu.mapSim.map[i][j].decomp = 0;
+                    }
+                }
                 simu.start();
                 for (int i=0; i < simu.mapSim.map.length; i++){
                     for (int j=0; j < simu.mapSim.map[0].length; j++){
