@@ -154,11 +154,20 @@ public class SimuMain {
     }
 
     public static void main(String[] args) throws IOException {
-        for(int i = 5; i <= 30; i += 5 ){
-            Map.FungusNumber = i;
-            for(int j = 0; j < 5; j++){
-                SimuMain simu = new SimuMain(400, 30, new ConstantClimate(22, 0.5));
+        for(int ii = 5; ii <= 60; ii += 5 ){
+            Map.FungusNumber = ii;
+            double totalDecom = 0;
+            for(int jj = 0; jj < 5; jj++){
+                SimuMain simu = new SimuMain(400, 50, new FileClimate("BjTem.csv", "BjHum.csv", 237));
+                simu.start();
+                for (int i=0; i < simu.mapSim.map.length; i++){
+                    for (int j=0; j < simu.mapSim.map[0].length; j++){
+                        if(simu.mapSim.map[i][j] == null) continue;
+                        totalDecom += simu.mapSim.map[i][j].decomp;
+                    }
+                }
             }
+            System.out.println(ii + "," + totalDecom/5);
         }
         
         

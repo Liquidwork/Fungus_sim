@@ -21,6 +21,7 @@ public class Map {
      */
     @SuppressWarnings("unchecked")
     public Map(int size, Climate climate){
+        Fungus.fungiCount = 0;
         map = new Fungus[size][size];
         this.climate = climate;
         int i = 0;
@@ -47,6 +48,7 @@ public class Map {
      */
     @SuppressWarnings("unchecked")
     public Map(int size, Climate climate, long randomSeed){
+        Fungus.fungiCount = 0;
         random = new Random(randomSeed);
         map = new Fungus[size][size];
         this.climate = climate;
