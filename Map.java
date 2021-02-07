@@ -20,7 +20,7 @@ public class Map {
         this.climate = climate;
         Random random = new Random();
         int i = 0;
-        int numOfFungi = random.nextInt(1) + 20; //Randomly determine how many fungi species(between 1-5)  in this experiment 
+        int numOfFungi = random.nextInt(10) + 15; //Randomly determine how many fungi species(between 1-5)  in this experiment 
         int xAxis, yAxis;
         for(i=0; i < numOfFungi; i++) //Generate different fungi species
         {   
