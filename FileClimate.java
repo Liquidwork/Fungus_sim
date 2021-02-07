@@ -8,6 +8,7 @@ import java.util.Queue;
 public class FileClimate extends Climate {
 
     public int date = 0;
+    public double lastHum = 0;
     public Queue<double[]> pairs;// climate pair, {temp, humidity}
     /**
      * Initialize a climate class from 2 files exported from Mathematica.
@@ -31,7 +32,9 @@ public class FileClimate extends Climate {
         while((temLine = temReader.readLine()) != null && (humLine = humReader.readLine()) != null){
             try{
                 pair[0] = Double.parseDouble(temLine.split("Quantity\\[")[1].split(",")[0]); //Get the number
-                pair[1] = Double.parseDouble(humLine.split("8.\\]\",")[1]); //Get the number
+                double today = Double.parseDouble(humLine.split("8.\\]\",")[1]); //Get the number
+                pair[1] = Math.abs(today - this.lastHum);
+                this.lastHum = today;
                 this.pairs.offer(pair.clone());//clone it to record a new array
             }catch(Exception e){
                 //do nothing

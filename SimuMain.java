@@ -22,7 +22,7 @@ public class SimuMain {
     public SimuMain(int size, int duration, Climate climate) {
         this.duration = duration;
         this.size = size;
-        mapSim = new Map(size, climate, 200);
+        mapSim = new Map(size, climate);
     }
 
     public void start() {
@@ -155,7 +155,7 @@ public class SimuMain {
 
     public static void main(String[] args) throws IOException {
         
-        SimuMain simu = new SimuMain(400, 100, new FileClimate("RomeTem.csv", "RomeHum.csv", 91));
+        SimuMain simu = new SimuMain(400, 30, new FileClimate("RomeTem.csv", "RomeHum.csv", 177));
         simu.start();
         double totalDecom = 0;
         for (int i=0; i < simu.mapSim.map.length; i++){
