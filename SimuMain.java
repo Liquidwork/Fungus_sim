@@ -25,7 +25,7 @@ public class SimuMain{
         this.current = new Date();
         for (int i=0; i < duration; i++){
             this.mapSim.spread(); // a step of simulation
-            if(i%5 == 4) this.saveProgress(i);
+            if(i%10 == 9) this.saveProgress(i);
         }
         saveStatistic();
     }
@@ -121,7 +121,7 @@ public class SimuMain{
     }
 
     public static void main(String[] args) {
-        SimuMain simu = new SimuMain(400, 30);
+        SimuMain simu = new SimuMain(400, 100);
         simu.start();
         double totalDecom = 0;
         for (int i=0; i < simu.mapSim.map.length; i++){

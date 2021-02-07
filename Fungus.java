@@ -67,7 +67,7 @@ public class Fungus implements Cloneable{
     /*Generate a horizontal spreading speed with Normal distribution mean = 1 Variance = 0.15*/
     private static double generateBasicV()
     {
-        double mean = 1.0;
+        double mean = 3.0;
         double deviation = 0.15;
         Random random = new Random();
         double basicV = deviation * random.nextGaussian() + mean;
