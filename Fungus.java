@@ -1,5 +1,3 @@
-import java.util.Random;
-
 /**
  * Fungus class Cloneable as it need to spread by cloning(mitosis)
  */

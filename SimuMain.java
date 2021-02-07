@@ -22,7 +22,7 @@ public class SimuMain {
     public SimuMain(int size, int duration, Climate climate) {
         this.duration = duration;
         this.size = size;
-        mapSim = new Map(size, climate);
+        mapSim = new Map(size, climate, 200);
     }
 
     public void start() {
