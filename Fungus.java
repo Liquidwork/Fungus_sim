@@ -10,8 +10,7 @@ public class Fungus implements Cloneable{
     private static final double[] A ={0.3769, 0.5144, 0.2450};  //Several Constants for temperature penalty
     private static final double[] B ={0.3311, 0.05467, -0.4457};
     private static final double[] C ={0.2746, 0.5334, 0.9016};
-    public static boolean useSameFungus = false; //whether use the same fungus group
-    public static int generatorNumber = 5;// the number of generator,same generator generate same random number
+
 
     public int fungusId; 
     //Basic value is the attributes of the fungi at 22deg, no humidity change.
@@ -65,22 +64,7 @@ public class Fungus implements Cloneable{
         this.decomp += this.basicB;
     }
 
-     /**
-     * When invoke,make the random generator generate the same fungus group
-     */
-    public static boolean useSameFungus()
-    {
-        useSameFungus = true;
-        return useSameFungus;
-    }
-      /**
-     * When invoke,stop generate the same fungus group
-     */
-    public static boolean notUseSameFungus()
-    {
-        useSameFungus = false;
-        return useSameFungus;
-    }
+     
 
 
     //Generation Methods:
@@ -90,14 +74,9 @@ public class Fungus implements Cloneable{
         double mean = 3.0;
         double deviation = 0.15;
         Random random;
-        if(useSameFungus)
-        {
-             random = new Random(generatorNumber);
-        }
-        else
-        {
-             random = new Random();
-        }
+        
+        random = new Random();
+        
         double basicV = deviation * random.nextGaussian() + mean;
         return basicV;
     }
@@ -105,14 +84,10 @@ public class Fungus implements Cloneable{
     private static double generateBasicX()
     {
         Random random;
-        if(useSameFungus)
-        {
-             random = new Random(generatorNumber);
-        }
-        else
-        {
-             random = new Random();
-        }
+        
+        
+        random = new Random();
+        
         double basicX = 9.0*random.nextFloat() + 1.0;
         return basicX;
     }
@@ -120,14 +95,10 @@ public class Fungus implements Cloneable{
     private static double generateMTradeOff()
     {
         Random random;
-        if(useSameFungus)
-        {
-             random = new Random(generatorNumber);
-        }
-        else
-        {
-             random = new Random();
-        }
+       
+       
+        random = new Random();
+        
         double mTradeOff = 2.0*random.nextFloat() - 1;
         return mTradeOff;
     }
