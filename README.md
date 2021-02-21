@@ -6,4 +6,4 @@ By introducing our the Multiple-factors Fungi Generate and Decomposition Rate Mo
 Fungi composition speed is determined by several attributes and the environment. Using our step by step simulation, we can gain the time-series and result of the simulation, providing several indexes to assess the growth and decomposition rate.
 
 Here is the process of fungi decomposition.
-https://i.loli.net/2021/02/21/FTlZ7K82DtmPsBS.png
+![Process.png](https://i.loli.net/2021/02/21/FTlZ7K82DtmPsBS.png)
