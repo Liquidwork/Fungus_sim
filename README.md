@@ -5,3 +5,5 @@ Part of our solution for MCM Problem A: Fungi, 2021
 By introducing our the Multiple-factors Fungi Generate and Decomposition Rate Model, we simulated the spreading and decomposition of fungi by hexagon cell map.
 Fungi composition speed is determined by several attributes and the environment. Using our step by step simulation, we can gain the time-series and result of the simulation, providing several indexes to assess the growth and decomposition rate.
 
+Here is the process of fungi decomposition.
+https://sm.ms/image/FTlZ7K82DtmPsBS
